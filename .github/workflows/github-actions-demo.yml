@@ -16,9 +16,9 @@ jobs:
         - name: set ssh key # 临时设置 ssh key
           run: |
               mkdir -p ~/.ssh/
-              echo "${{secrets.TEST}}" > ~/.ssh/id_rsa1 
-              chmod 600 ~/.ssh/id_rsa1
-              ssh-keyscan "124.221.134.139" >> ~/.ssh/known_hosts 
+              echo "${{secrets.TEST}}" > ~/.ssh/id_tencent_rsa
+              chmod 600 ~/.ssh/id_tencent_rsa
+              ssh-keyscan "124.221.134.139" >> ~/.ssh/known_hosts
     test2:
       runs-on: ubuntu-latest
       steps:
