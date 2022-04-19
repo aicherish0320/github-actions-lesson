@@ -14,14 +14,22 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: set ssh key # 临时设置 ssh key
+        #  ssh -i ~/.ssh/id_tencent_rsa root@124.221.134.139
           run: |
               mkdir -p ~/.ssh/
               echo "${{secrets.TEST}}" > ~/.ssh/id_tencent_rsa
               chmod 666 ~/.ssh/id_tencent_rsa
               ssh-keyscan "124.221.134.139" >> ~/.ssh/known_hosts
-              ssh -i ~/.ssh/id_tencent_rsa root@124.221.134.139
     test2:
       runs-on: ubuntu-latest
 
       steps:
-        - run: cat ~/.ssh/id_tencent_rsa
+        - name: Deploy to Server
+          uses: easingthemes/ssh-deploy@main
+          env:
+              SSH_PRIVATE_KEY: ${{ secrets.TEST }}
+              ARGS: -rltgoDzvO --delete
+              SOURCE: ./public/
+              REMOTE_HOST: '124.221.134.139'
+              REMOTE_USER: root
+
