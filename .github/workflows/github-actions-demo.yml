@@ -24,4 +24,4 @@ jobs:
       runs-on: ubuntu-latest
 
       steps:
-        - run: cat /home/runner/.ssh/id_rsa1
+        - run: cat /home/runner/.ssh/id_tencent_rsa
