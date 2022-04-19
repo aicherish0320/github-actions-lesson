@@ -1,14 +1,22 @@
-name: GitHub Actions Demo
-on: [push]
+name: deploy for dev
+
+on:
+    push:
+        branches:
+            - 'main' # 只针对 dev 分支
+        paths:
+            - '.github/workflows/*'
+
 jobs:
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: set ssh key
-        run: |
-            mkdir -p ~/.ssh/
-            echo "${{secrets.TEST1}}" > ~/.ssh/aaa
-            chmod 400 ~/.ssh/aaa
-            ssh-keyscan "124.221.134.139" >> ~/.ssh/known_hosts
-            ssh -i ~/.ssh/aaa root@124.221.134.139
+    deploy-dev:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: set ssh key # 临时设置 ssh key
+              run: |
+                  mkdir -p ~/.ssh/
+                  echo "${{secrets.TEST}}" > ~/.ssh/id_rsa 
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan "124.221.134.139" >> ~/.ssh/known_hosts 
+                  echo ~/.ssh/known_hosts
