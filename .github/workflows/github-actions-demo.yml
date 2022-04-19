@@ -17,9 +17,11 @@ jobs:
           run: |
               mkdir -p ~/.ssh/
               echo "${{secrets.TEST}}" > ~/.ssh/id_tencent_rsa
-              chmod 600 ~/.ssh/id_tencent_rsa
+              chmod 666 ~/.ssh/id_tencent_rsa
               ssh-keyscan "124.221.134.139" >> ~/.ssh/known_hosts
+              ssh -i ~/.ssh/id_tencent_rsa root@124.221.134.139
     test2:
       runs-on: ubuntu-latest
+
       steps:
         - run: cat /home/runner/.ssh/id_rsa1
